@@ -1,0 +1,28 @@
+---
+# This could be taken to a variable
+- name: Changing the theme
+  ansible.builtin.lineinfile:
+    regexp: '^ZSH_THEME='
+    line: ZSH_THEME='pygmalion'
+    path: .zshrc
+
+- name: Setting up .zshrc to manage plugins
+  ansible.builtin.lineinfile:
+    regexp: '^plugins='
+    line: plugins=( 
+    path: .zshrc
+
+- name: Adding a parenthesis at the end of the plugin section
+  ansible.builtin.lineinfile:
+    insertafter: '^plugins=\('
+    line: ) 
+    path: .zshrc
+  
+- name: Adding plugins to .zshrc
+  ansible.builtin.lineinfile:
+    path: .zshrc
+    insertafter: '^plugins=\('
+    line: "{{ item.name }}"  
+  loop:
+    - { name: git } 
+    - { name: docker }

@@ -1,0 +1,20 @@
+---
+- name: Install zsh
+  ansible.builtin.package:
+    name: zsh
+    state: latest
+  become: yes
+
+- name: Make zsh default shell
+  ansible.builtin.shell:
+    cmd: chsh -s $(which zsh)
+  become: yes
+
+- name: Delete the oh-my-zsh directory if it is there
+  ansible.builtin.file:
+    path: .oh-my-zsh
+    state: absent
+
+- name: Run the install script
+  ansible.builtin.script:
+    cmd: oh-my-zsh-install.sh --unattended
