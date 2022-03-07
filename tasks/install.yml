@@ -7,12 +7,12 @@
 
 - name: Make zsh default shell
   ansible.builtin.shell:
-    cmd: chsh -s $(which zsh)
+    cmd: chsh -s $(which zsh) $(whoami)
   become: yes
 
 - name: Delete the oh-my-zsh directory if it is there
   ansible.builtin.file:
-    path: .oh-my-zsh
+    path: ~/.oh-my-zsh
     state: absent
 
 - name: Run the install script
